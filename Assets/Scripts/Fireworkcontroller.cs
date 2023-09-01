@@ -28,6 +28,11 @@ public class Fireworkcontroller: MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Reload();
+        }
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 buttonOnClick();
@@ -36,7 +41,7 @@ public class Fireworkcontroller: MonoBehaviour
         { 
             transform.position = player.transform.position + offset;
         }
-            
+
 
         void buttonOnClick()
         {
@@ -46,7 +51,17 @@ public class Fireworkcontroller: MonoBehaviour
             fireworkRigidbody.isKinematic = false;
             fireworkRigidbody.AddForce(0, 0, thrust, ForceMode.Impulse);
             pressed = true;
+            Destroy(firework, 3);
+            
         }
+        void Reload()
+        {
+            Instantiate(firework);
+            firework.transform.position = player.transform.position;
+            firework.transform.position = player.transform.position + offset;
+            Destroy(firework, 3);
+        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -55,6 +70,7 @@ public class Fireworkcontroller: MonoBehaviour
             other.gameObject.SetActive(false);
             globalVariables.count = globalVariables.count + 1;
             SetCountText();
+            
         }
 
     }
@@ -64,6 +80,7 @@ public class Fireworkcontroller: MonoBehaviour
         if (globalVariables.count == 12)
         {
             winTextObject.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }

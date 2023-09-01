@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (globalVariables.count == 12)
         {
             winTextObject.SetActive (true);
+            Time.timeScale = 0;
         }
     }
 
