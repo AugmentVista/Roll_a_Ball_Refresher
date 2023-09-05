@@ -8,60 +8,57 @@ public class Fireworkcontroller: MonoBehaviour
 {
     GlobalVariables globalVariables;
     public TextMeshProUGUI countText;
+    public TextMeshProUGUI AmmoText;
     public GameObject firework;
     public float thrust = 1.0f;
     public Rigidbody rb;
     public bool pressed;
     public GameObject winTextObject;
-
     public GameObject player;
     private Vector3 offset;
 
-    // Start is called before the first frame update
     private void Start()
     {
         globalVariables = FindObjectOfType<GlobalVariables>();
         offset = transform.position - player.transform.position;
         pressed = false;
     }
-
-    // Update is called once per frame
     void LateUpdate()
     {
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        /*if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Reload();
+        }*/
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+         buttonOnClick();
         }
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                buttonOnClick();
-            }
         if (pressed == false)
         { 
             transform.position = player.transform.position + offset;
         }
+        
 
 
         void buttonOnClick()
         {
-            Debug.Log("sdgfdsgsgs");
+            Debug.Log("Debug Log buttonOnClick");
 
             Rigidbody fireworkRigidbody = firework.GetComponent<Rigidbody>();
             fireworkRigidbody.isKinematic = false;
             fireworkRigidbody.AddForce(0, 0, thrust, ForceMode.Impulse);
+            globalVariables.ActiveAmmoCount++;
             pressed = true;
             Destroy(firework, 3);
-            
         }
-        void Reload()
+        /*void Reload()
         {
             Instantiate(firework);
             firework.transform.position = player.transform.position;
             firework.transform.position = player.transform.position + offset;
             Destroy(firework, 3);
         }
-
+        */
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -72,7 +69,6 @@ public class Fireworkcontroller: MonoBehaviour
             SetCountText();
             
         }
-
     }
     void SetCountText()
     {
